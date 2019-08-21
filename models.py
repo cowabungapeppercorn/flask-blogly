@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-
 def connect_db(app):
     """ Connect to Database """
 
@@ -24,5 +23,8 @@ class User(db.Model):
     last_name = db.Column(db.String(50),
                           nullable=False)
     image_url = db.Column(db.String(200),
-                          nullable=True,
-                          default=('https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-512.png'))
+                          nullable=False,
+                          server_default='https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-512.png')
+
+
+

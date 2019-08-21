@@ -6,9 +6,16 @@
 
 {% block content %}
 
-    <form action="/submit-user/" method="UPDATE">
-        <input type="text" name="first_name" id="first_name">
-        <input type="text" name="last_name" id="last_name">
-        <input type="text" name="image_url" id="image_url">
+    <form action="/users/new" method="POST">
+        <input type="text" name="first_name" placeholder="{{ user.first_name }}" "first_name">
+        <label for="first_name">First name</label>
+        <input type="text" name="last_name" placeholder="{{ user.last_name }}" "last_name">
+        <label for="last_name">Last name</label>
+        <input type="text" name="image_url" placeholder="{{ user.image_url }}" id="image_url">
+        <label for="image_url">Image URL</label>
         <input type="submit" value="Add User">
     </form>
+
+    <a href="/users/{{user.id}}"><button>Cancel</button></a>
+
+{% endblock %}

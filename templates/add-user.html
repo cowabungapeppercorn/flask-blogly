@@ -6,11 +6,14 @@
 
 {% block content %}
 
-    <form action="/submit-user/" method="POST">
+    <form action="/users/new" method="POST">
         <input type="text" name="first_name" id="first_name">
+        <label for="first_name">First name</label>
         <input type="text" name="last_name" id="last_name">
+        <label for="last_name">Last name</label>
         <input type="text" name="image_url" id="image_url">
-        <input type="submit" value="Add">
+        <label for="image_url">Image URL</label>
+        <input style="display: block" type="submit" value="Add">
     </form>
 
     {% endblock %}

@@ -4,14 +4,14 @@
 
 {% block main_header %}
 
-<img src="{{user.image_url}}" alt="#" title="{{first_name}} {{last_name}}">
+<img style="max-width: 200px;" src="{{ user.image_url }}" title="{{ user.first_name }} {{user.last_name}}">
 <h1> {{ user.first_name }} {{ user.last_name }} </h1>
 
 {% endblock %}
 
 {% block content %}
 
-    <button>Edit</button>
-    <button>Delete</button>
+    <a href="/users/{{ user.id }}/edit"><button>Edit</button></a>
+    <a href="/users/{{ user.id }}/delete"><button>Delete</button></a>
 
 {% endblock %}
