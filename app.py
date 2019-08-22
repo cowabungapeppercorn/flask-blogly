@@ -20,7 +20,7 @@ connect_db(app)
 def index():
     return redirect('/users')
 
-  
+
 @app.route('/users')
 def show_users():
     users = User.query.all()
@@ -29,7 +29,7 @@ def show_users():
 
 @app.route('/users/new', methods=['GET'])
 def show_user_form():
-    
+
     return render_template('add-user.html')
 
 
@@ -38,11 +38,13 @@ def add_new_user():
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     image_url = request.form['image_url'] or None
-    new_user = User(first_name=first_name, last_name=last_name, image_url=image_url)
-    
+    new_user = User(first_name=first_name,
+                    last_name=last_name,
+                    image_url=image_url)
+
     db.session.add(new_user)
     db.session.commit()
-    
+
     return redirect('/users')
 
 
@@ -61,13 +63,12 @@ def show_user_edit_page(user_id):
 @app.route('/users/<int:user_id>/delete')
 def delete_user(user_id):
     user = User.query.get_or_404(user_id)
-    
+
     pdb.set_trace()
-    
+
     # user.query.delete()
     db.session.delete(user)
     db.session.commit()
-    
+
     flash(f'User {user.first_name} deleted')
     return redirect('/users')
- 

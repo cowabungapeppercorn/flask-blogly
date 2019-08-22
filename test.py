@@ -10,11 +10,11 @@ class FlaskTests(TestCase):
         app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 
     def test_homepage(self):
-       with self.client as client:
-           response = client.get('/')
-           html = response.get_data(as_text=True)
-           self.assertEqual(response.status_code, 302)
-           self.assertIn('<h1>Redirecting...</h1>', html)
+        with self.client as client:
+            response = client.get('/')
+            html = response.get_data(as_text=True)
+            self.assertEqual(response.status_code, 302)
+            self.assertIn('<h1>Redirecting...</h1>', html)
 
     def test_users_page(self):
         with self.client as client:
