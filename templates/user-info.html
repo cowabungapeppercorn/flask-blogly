@@ -11,17 +11,23 @@
 
 {% block content %}
 
-    <a href="/users/{{ user.id }}/edit"><button>Edit</button></a>
-    <a href="/users/{{ user.id }}/delete"><button>Delete</button></a>
+<a href="/users/{{ user.id }}/edit"><button>Edit</button></a>
+<a href="/users/{{ user.id }}/delete"><button>Delete</button></a>
 
-    <h2>Posts</h2>
+<h2>Posts</h2>
 
-    <ul>
-        {% for post in posts %}
-            <a href=""><li>{{ post.title }}</li></a>
-        {% endfor %}
-    </ul>
+{% for msg in get_flashed_messages() %}
+<p><i>{{ msg }}</i></p>
+{% endfor %}
 
-    <a href="/users/{{user.id}}/posts/new"><button>Add Post</button></a>
+<ul>
+    {% for post in posts %}
+    <a href="/posts/{{ post.id }}">
+        <li>{{ post.title }}</li>
+    </a>
+    {% endfor %}
+</ul>
+
+<a href="/users/{{user.id}}/posts/new"><button>Add Post</button></a>
 
 {% endblock %}

@@ -6,12 +6,12 @@
 
 {% block content %}
 
-    <form action="/users/{{user.id}}/posts/edit" method="POST">
+    <form action="/posts/{{ post.id }}/edit" method="POST">
         <input type="text" name="title" id="title">
         <label for="title">Title</label>
         <input type="text" name="content" id="content">
         <label for="content">Post Content</label>
-        <a href="/users/{{user.id}}/posts/{{post.id}}"><button>Cancel</button></a>
+        <a href="/posts/{{post.id}}"><button>Cancel</button></a>
         <input style="display: block" type="submit" value="Edit">
     </form>
 

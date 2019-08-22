@@ -53,7 +53,7 @@ def add_new_user():
 @app.route('/users/<int:user_id>')
 def show_user_info(user_id):
     user = User.query.get_or_404(user_id)
-    posts = Post.query.filter(user_id == user_id).all()
+    posts = Post.query.filter(Post.user_id == user_id).all()
     return render_template('user-info.html', user=user, posts=posts)
 
 
@@ -112,14 +112,22 @@ def show_edit(post_id):
 @app.route('/posts/<int:post_id>/edit', methods=['POST'])
 def edit_post(post_id):
     post = Post.query.get_or_404(post_id)
-    title = request.form['title']
-    content = request.form['content']
-    new_post = Post(title=title,
-                    content=content,
-                    created_at=datetime.datetime.now(),
-                    user_id=post.user_id)
+    post.title = request.form['title']
+    post.content = request.form['content']
 
-    db.session.add(new_post)
+    db.session.add(post)
     db.session.commit()
 
     return redirect(f'/posts/{post_id}')
+
+
+@app.route('/posts/<int:post_id>/delete')
+def delete_post(post_id):
+    
+    post = Post.query.get(post_id)
+    
+    db.session.delete(post)
+    db.session.commit()
+
+    flash(f'{post.title} deleted')
+    return redirect(f'/users/{post.user_id}')
