@@ -53,8 +53,7 @@ def add_new_user():
 @app.route('/users/<int:user_id>')
 def show_user_info(user_id):
     user = User.query.get_or_404(user_id)
-    posts = Post.query.filter(Post.user_id == user_id).all()
-    return render_template('user-info.html', user=user, posts=posts)
+    return render_template('user-info.html', user=user, posts=user.posts)
 
 
 @app.route('/users/<int:user_id>/edit')
@@ -63,7 +62,21 @@ def show_user_edit_page(user_id):
     return render_template('update-user.html', user=user)
 
 
-@app.route('/users/<int:user_id>/delete')
+@app.route('/users/<int:user_id>/edit', methods=['POST'])
+def edit_user(user_id):
+    default = 'https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-512.png'
+    user = User.query.get_or_404(user_id)
+    user.first_name = request.form['first_name']
+    user.last_name = request.form['last_name']
+    user.image_url = request.form['image_url'] or default
+
+    db.session.add(user)
+    db.session.commit()
+
+    return redirect(f'/users/{user_id}')
+
+
+@app.route('/users/<int:user_id>/delete', methods=['POST'])
 def delete_user(user_id):
     user = User.query.get_or_404(user_id)
     db.session.delete(user)
@@ -98,15 +111,13 @@ def create_post(user_id):
 @app.route('/posts/<int:post_id>')
 def show_post(post_id):
     post = Post.query.get_or_404(post_id)
-    user = User.query.get_or_404(post.user_id)
-    return render_template('post_display.html', post=post, user=user)
+    return render_template('post_display.html', post=post, user=post.user)
 
 
 @app.route('/posts/<int:post_id>/edit')
 def show_edit(post_id):
     post = Post.query.get_or_404(post_id)
-    user = User.query.get_or_404(post.user_id)
-    return render_template('post_edit.html', post=post, user=user)
+    return render_template('post_edit.html', post=post, user=post.user)
 
 
 @app.route('/posts/<int:post_id>/edit', methods=['POST'])
@@ -123,9 +134,9 @@ def edit_post(post_id):
 
 @app.route('/posts/<int:post_id>/delete')
 def delete_post(post_id):
-    
-    post = Post.query.get(post_id)
-    
+
+    post = Post.query.get_or_404(post_id)
+
     db.session.delete(post)
     db.session.commit()
 

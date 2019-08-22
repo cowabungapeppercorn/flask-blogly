@@ -48,7 +48,7 @@ class FlaskTests(TestCase):
             data = {'first_name': 'first', 'last_name': 'last', 'image_url': 'image_url'}
             response = client.post('/users/new', data=data)
             self.assertEqual(response.status_code, 302)
-            
+
     def test_posts_create_new(self):
         with self.client as client:
             data = {'title': 'title', 'content': ''}
