@@ -24,7 +24,9 @@ class User(db.Model):
     image_url = db.Column(
         db.String(200),
         nullable=False,
-        server_default='https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-512.png')
+        server_default=
+        'https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-512.png'
+    )
 
 
 class Post(db.Model):
@@ -33,8 +35,8 @@ class Post(db.Model):
     __tablename__ = 'posts'
 
     user = db.relationship('User')
-    # tags = db.relationship('PostTag', backref='posts')
-    # posts_tags = db.relationship('Tag', secondary='posts_tags', backref='posts')
+    posts_tags = db.relationship('PostTag')
+    tags = db.relationship('Tag', secondary='posts_tags')
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False)
@@ -48,11 +50,13 @@ class Tag(db.Model):
 
     __tablename__ = 'tags'
 
-    # posts = db.relationship('PostTag', backref='tags')
-    # posts_tags = db.relationship('Post', secondary='posts_tags', backref='tags')
+    # posts_tags = db.relationship('PostTag', backref='tags')
+    posts_tags = db.relationship('PostTag')
+    posts = db.relationship('Post', secondary='posts_tags')
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
+    posts = db.relationship('Post', secondary='posts_tags')
 
 
 class PostTag(db.Model):
@@ -60,7 +64,10 @@ class PostTag(db.Model):
 
     __tablename__ = 'posts_tags'
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
-                        primary_key=True)
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'),
+    tags = db.relationship('Tag')
+    posts = db.relationship('Post')
+
+    tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), primary_key=True)
+    post_id = db.Column(db.Integer,
+                        db.ForeignKey('posts.id'),
                         primary_key=True)

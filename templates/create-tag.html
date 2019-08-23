@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Create a tag{% endblock %}
+
+{% block main_header %}Create a tag{% endblock %}
+
+{% block content %}
+
+    <form action="/tags/new" method="POST">
+        <input type="text" name="name" id="name">
+        <label for="name">name</label>
+        <a href="/tags"><button type="button">Cancel</button></a>
+        <input style="display: inline" type="submit" value="Add Post">
+    </form>
+
+
+{% endblock %}

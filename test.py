@@ -31,10 +31,10 @@ class FlaskTests(TestCase):
 
     def test_user_edit(self):
         with self.client as client:
-            response = client.get('/users/27/edit')
+            response = client.get('/users/20/edit')
             html = response.get_data(as_text=True)
             self.assertEqual(response.status_code, 200)
-            self.assertIn('<form action="/users/new" method="POST">', html)
+            self.assertIn('<form action="/users/20/edit" method="POST">', html)
 
     def test_new_post(self):
         with self.client as client:
